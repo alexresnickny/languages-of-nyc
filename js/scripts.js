@@ -17,10 +17,6 @@ map.on('style.load', function() {
     type: 'geojson',
     data: 'data/language-at-home.geojson'
   });
-  map.addSource('employment-data', {
-    type: 'geojson',
-    data: 'data/unemployment.geojson'
-  });
 
   // add a layer to style and display the Source
   map.addLayer({
@@ -30,7 +26,7 @@ map.on('style.load', function() {
     'layout': {},
     'paint': {
       "fill-color": ["step",
-        ["get", "NotEnglish"],
+        ["get", "noEngPct"],
         "#5EF688", 0.1,
         "#5EF6D4", 0.2,
         "#5ECCF6", 0.3,
@@ -85,8 +81,7 @@ map.on('style.load', function() {
       var hoveredFeature = features[0]
 
       var tractNumber = hoveredFeature.properties.NAMELSAD10
-      var totalNumber = hoveredFeature.properties.Tot
-      var notEnglishNumber = hoveredFeature.properties.ENG_NOT
+      var notEngPercent = hoveredFeature.properties.notEngPct
 
       $('#tractNumber').text(tractNumber)
       $('#totalPop').text(totalNumber)

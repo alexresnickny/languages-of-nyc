@@ -157,3 +157,14 @@ html, body, .container, #sidebar, #mapContainer {
 #qmark {
   font-size: 0.2rem;
 }
+
+.btn-group-vertical {
+  padding: 10px;
+}
+
+.layerselectorcontainer {
+  z-index: 2;
+  position: absolute;
+  right: 5px;
+  top: 70px;
+}
