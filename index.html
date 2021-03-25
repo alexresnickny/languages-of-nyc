@@ -14,26 +14,13 @@
   <div class='container'>
     <div id='sidebar'>
       <h1>English Language Proficiency in NYC</h1>
-      <div id='description'>There are many different language communities in New York City. While the city is very diverse, very often those who do not speak English lack access to job opportunities.</div>
-      <div id='instructions'>Click on the buttonsat the top to see where New Yorkers need language access asssistance..</div>
-      <!-- text changes with click -->
-      <div id='tractInfo'>
-        <div>
-          <p class="tractData"><b><i><span id='tractNumber'></span></i></b></p>
-        </div>
-        <div>
-          <p class="tractData">Number of LEPs: <b><span id='totalPop'></span></b></p>
-        </div>
-        <div>
-          <p class="tractData">Percentage of LEPs:<b><span id='notEnglish'></span></b></p>
-        </div>
-      </div>
+      <div id='description'>There are many different language communities in New York City. Often, residents who are not proficient in English (LEPs or Low-English Proficient Individuals) tend to cluster in communities throughout the city.</div>
+      <div id='instructions'>Use the buttons at the top of the map to see where New Yorkers need language access asssistance for different languages.</div>
 
       <!-- Trigger/Open The Modal -->
-    <button id="myBtn"><i class="fas fa-traffic-light"></i> Methodology</button>
-
-    <!-- The Modal -->
-    <div id="myModal" class="modal">
+      <button id="myBtn"><i class="modalButton"></i> Methodology</button>
+      <!-- The Modal -->
+      <div id="myModal" class="modal">
 
       <!-- Modal content -->
       <div class="modal-content">
@@ -43,9 +30,27 @@
 
     </div>
 
+
+
       <!--legend-->
       <div class='legend-box'>
         <h2>Legend</h2>
+        <div class="row2" id="legendbar">
+           <p class='ranknumbers'>
+             0%
+
+             100%</p>
+           <div class="column2" id="legendbar1">
+           </div>
+           <div class="column2" id="legendbar2">
+           </div>
+           <div class="column2" id="legendbar3">
+           </div>
+           <div class="column2" id="legendbar4">
+           </div>
+           <div class="column2" id="legendbar5">
+           </div>
+         </div>
         <div class="legend">
           <div class=colorDots id=a> </div>
           <div class=pctgColor>0-10%</div>
@@ -82,7 +87,8 @@
         </div>
       </div>
 
-      <div id='data'>Data for this map comes from the <a href="https://oxussociety.org/introducing-the-central-asia-migration-tracker/">Oxus Society</a> and information on asylum was sourced from <a href="https://docs.google.com/spreadsheets/d/1hH2I2qCVbH3_FvsBbZkRCye9vWlkv_ifaKnJWz502z4/edit#gid=1395753077">Original Data Source</a>.</div>
+      <div id='data'>Data for this map comes from the <a href="https://data.census.gov/cedsci/table?q=C16001%3A%20LANGUAGE%20SPOKEN%20AT%20HOME%20FOR%20THE%20POPULATION%205%20YEARS%20AND%20OVER&tid=ACSDT5Y2018.C16001&hidePreview=true">Census
+          Bureau</a> and was accessed via the <a href="https://prattcenter.net/resources/neighborhood_data_portal">Pratt Neighborhood Data Portal</a>.</div>
     </div>
     <div id='mapContainer'>MAP</div>
   </div>

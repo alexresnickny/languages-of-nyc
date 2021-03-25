@@ -15,7 +15,7 @@ map.on('style.load', function() {
   // add a geojson source
   map.addSource('language-data', {
     type: 'geojson',
-    data: 'data/language-at-home.geojson'
+    data: 'data/languageAtHome.geojson'
   });
 
   // add a layer to style and display the Source
