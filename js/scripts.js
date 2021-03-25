@@ -15,7 +15,7 @@ map.on('style.load', function() {
   // add a geojson source
   map.addSource('language-data', {
     type: 'geojson',
-    data: 'data/languageAtHome.geojson'
+    data: 'data/language-at-home1.geojson'
   });
 
   // add a layer to style and display the Source
@@ -25,16 +25,8 @@ map.on('style.load', function() {
     'source': 'language-data',
     'layout': {},
     'paint': {
-      "fill-color": ["step",
-        ["get", "noEngPct"],
-        "#5EF688", 0.1,
-        "#5EF6D4", 0.2,
-        "#5ECCF6", 0.3,
-        "#5E80F6", 0.4,
-        "#885EF6", 0.5,
-        "#D45EF6", 0.6,
-        "#7A3B94"
-      ]
+      "fill-color": ["green"
+]
     }
   });
 
