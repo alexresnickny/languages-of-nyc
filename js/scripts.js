@@ -16,19 +16,19 @@ var noengdescription = [
   'This includes all individuals 5 years and over with low English proficiency, no matter their native language.'
 ];
 var spdescription = [
-  'This includes all those who speak Spanish and do not speak English proficiently.'
+  'This includes New Yorkers who speak Spanish but not English.'
 ];
 var chdescription = [
-  'This includes speakers of all dialects of Chinese (Mandarin and Cantonese, etc.).'
+  'This includes speakers of Mandarin, Cantonese, and all other Chinese dialects.'
 ];
 var kordescription = [
-  'This includes New Yorkers who speak Korean.'
+  'This includes New Yorkers who speak Korean but not English.'
 ];
 var frdescription = [
-  'This includes those who speak French and Haitian Creole. Many Haitian Creole speakers also speak some French.'
+  'This includes those who speak French or Haitian Creole. Many Haitian Creole speakers also speak some French.'
 ];
 var rudescription = [
-  'This includes all speakers of Slavic Languages. Russian predominates in most of New York City, but there are also significant concentrations of Polish and Serbo-Croatian speakers in North Brooklyn and Queens.'
+  'This includes all speakers of Slavic Languages. Russian predominates in most of New York City, but there are also significant populations of Polish and Serbo-Croatian speakers in North Brooklyn and Queens.'
 ];
 var ardescription = [
   'This includes speakers of all dialects of Arabic.'
@@ -287,12 +287,16 @@ map.on('load', function() {
 
   map.addLayer({
     'id': 'boroughs',
-    'type': 'line',
+    'type': 'fill',
     'source': 'boroughLanguages',
-    'layout': {},
+    'layout': {
+      'visibility': 'visible',
+    },
     'paint': {
-      "line-color": "red",
-      "line-width": 3
+      'fill-color': 'white',
+      'fill-outline-color': 'red',
+      'fill-outline-width': 3,
+      'fill-opacity': 0
     }
   });
   // add an empty data source, which we will use to highlight the tract the user is hovering over
