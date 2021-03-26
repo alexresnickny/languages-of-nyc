@@ -23,6 +23,9 @@ Built with: https://atom.io/
 
 The only packages I used beyond the basic suite in atom were <a href = "https://atom.io/packages/atom-beautify">atom-beautify</a> to organize my code, and <a href = "https://atom.io/packages/atom-live-server-plus">atom-live-server-plus</a> to monitor my progress before publishing on github (although there are many commits anyway).
 
+<em>Additional files in this Repository</em>
+The files boroughVoting.geojson and additionalscripts.js are not currently wired to the html page. These files contain some of the information required to build additional layers.
+
 <em>Contribute</em>
 
 I only started on my coding journey a few months ago so I'm still learning a lot (and getting lost a lot of the time)! If you would like to build out this map even more, or use it with your organization, feel free!
