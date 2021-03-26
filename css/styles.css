@@ -22,6 +22,13 @@ html, body, .container, #sidebar, #mapContainer {
   margin-right: 5px;
 }
 
+#instructions {
+  border: 3px solid black;
+  padding: 5px;
+  margin: 5px;
+  border-radius: 5px;
+}
+
 #mapContainer {
   flex-grow: 1;
 }
@@ -117,17 +124,17 @@ html, body, .container, #sidebar, #mapContainer {
   width: 100%;
   justify-content: space-evenly;
   margin-bottom: 15px;
-  font-weight:400;
+  font-weight: 400;
   font-size: 14px;
 }
 
 .color-code {
-  display:flex;
+  display: flex;
   margin: 10px;
 }
 
 .legend-head {
-  font-family: "math", sans-serif;
+  font-family: 'verdana';
   text-align: center;
   font-size: 16px;
 }
@@ -139,6 +146,6 @@ html, body, .container, #sidebar, #mapContainer {
 
 #c1 {
   height: 23px;
-  background-color: red; /* For browsers that do not support gradients */
+  background-color: black; /* For browsers that do not support gradients */
   background-image: linear-gradient(to right, white, #c77dff, #9d4edd, #7b2cbf, #5a189a, #3c096c);
 }
