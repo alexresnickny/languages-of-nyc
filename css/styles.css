@@ -13,6 +13,7 @@ html, body, .container, #sidebar, #mapContainer {
   background: lightgray;
   width: 320px;
   font-family: verdana;
+  padding: 10px;
 }
 
 #description, #instructions, #data {
