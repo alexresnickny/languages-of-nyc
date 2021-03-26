@@ -12,18 +12,18 @@ var nav = new mapboxgl.NavigationControl();
 map.addControl(nav, 'top-left');
 
 // colorsets for legendbar
-var noEngcolors = ['#f1eef6', '#bdc9e1', '#74a9cf', '#2b8cbe', '#045a8d'];
-var spcolors = ['#fef0d9', '#fdcc8a', '#fc8d59', '#e34a33', '#b30000'];
-var chcolors= ['#f2f0f7', '#cbc9e2', '#9e9ac8', '#756bb1', '#54278f'];
-var korcolors = ['#f7f7f7', '#cccccc', '#969696', '#636363', '#252525'];
-var frcolors = ['#feebe2', '#fbb4b9', '#f768a1', '#c51b8a', '#7a0177'];
-var rucolors = ['#f6eff7', '#bdc9e1', '#67a9cf', '#1c9099', '#016c59'];
-var arcolors = ['#ffffd4', '#fed98e', '#fe9929', '#d95f0e', '#993404'];
-var gercolors = ['#fee5d9', '#fcae91', '#fb6a4a', '#de2d26', '#a50f15'];
+var noEngcolors = ['white', '#ea698b', '#c05299', '#937aab', '#6d23b6', '#571089'];
+var spcolors = ['white', '#c77dff', '#9d4edd', '#7b2cbf', '#5a189a', '#3c096c'];
+var chcolors= ['white', '#c77dff', '#9d4edd', '#7b2cbf', '#5a189a', '#3c096c'];
+var korcolors = ['white', '#c77dff', '#9d4edd', '#7b2cbf', '#5a189a', '#3c096c'];
+var frcolors = ['white', '#c77dff', '#9d4edd', '#7b2cbf', '#5a189a', '#3c096c'];
+var rucolors = ['white', '#c77dff', '#9d4edd', '#7b2cbf', '#5a189a', '#3c096c'];
+var arcolors = ['white', '#c77dff', '#9d4edd', '#7b2cbf', '#5a189a', '#3c096c'];
+var gercolors = ['white', '#c77dff', '#9d4edd', '#7b2cbf', '#5a189a', '#3c096c'];
 
 // desciptions of each linguistic group
 var noengdescription = [
-  'This includes all individuals 5 years and over who with low English proficiency, no matter their native language.'
+  'This includes all individuals 5 years and over with low English proficiency, no matter their native language.'
 ];
 var spdescription = [
   'This includes all those who speak Spanish and do not speak English proficiently.'
@@ -61,15 +61,20 @@ map.on('style.load', function() {
     'source': 'language-data',
     'layout': {},
     'paint': {
-      "fill-color": ["step",
-        ["get", "notEngPct"],
-        "#5EF688", 0.1,
-        "#5EF6D4", 0.2,
-        "#5ECCF6", 0.3,
-        "#5E80F6", 0.4,
-        "#885EF6", 0.5,
-        "#D45EF6", 0.6,
-        "#7A3B94"
+      "fill-color": ["interpolate",
+        ["get", "noEngPct"],
+        0.0,
+        'white',
+        0.1,
+        '#ea698b',
+        0.2,
+        '#c05299',
+        0.3,
+        '#937aab',
+        0.4,
+        '#6d23b6',
+        0.5,
+        '#571089'
       ]
     }
   });
@@ -86,16 +91,18 @@ map.on('style.load', function() {
         'interpolate',
         ['linear'],
         ['get', 'spPct'],
+        0.0,
+        'white',
         0.1,
-        '#b30000',
+        '#c77dff',
         0.2,
-        '#e34a33',
+        '#9d4edd',
         0.3,
-        '#fc8d59',
+        '#7b2cbf',
         0.4,
-        '#fdcc8a',
+        '#5a189a',
         0.5,
-        '#fef0d9'
+        '#3c096c'
       ],
       'fill-outline-color': '#ccc',
       'fill-opacity': 0.8
@@ -113,16 +120,18 @@ map.on('style.load', function() {
         'interpolate',
         ['linear'],
         ['get', 'chPct'],
+        0.0,
+        'white',
         0.1,
-        '#54278f',
+        '#c77dff',
         0.2,
-        '#756bb1',
+        '#9d4edd',
         0.3,
-        '#9e9ac8',
+        '#7b2cbf',
         0.4,
-        '#cbc9e2',
+        '#5a189a',
         0.5,
-        '#f2f0f7'
+        '#3c096c'
       ],
       'fill-outline-color': '#ccc',
       'fill-opacity': 0.8
@@ -140,16 +149,18 @@ map.on('style.load', function() {
         'interpolate',
         ['linear'],
         ['get', 'korPct'],
+        0.0,
+        'white',
         0.1,
-        '#252525',
+        '#c77dff',
         0.2,
-        '#636363',
+        '#9d4edd',
         0.3,
-        '#969696',
+        '#7b2cbf',
         0.4,
-        '#cccccc',
+        '#5a189a',
         0.5,
-        '#f7f7f7'
+        '#3c096c'
       ],
       'fill-outline-color': '#ccc',
       'fill-opacity': 0.8
@@ -168,16 +179,18 @@ map.on('style.load', function() {
         'interpolate',
         ['linear'],
         ['get', 'frPct'],
+        0.0,
+        'white',
         0.1,
-        '#7a0177',
+        '#c77dff',
         0.2,
-        '#c51b8a',
+        '#9d4edd',
         0.3,
-        '#f768a1',
+        '#7b2cbf',
         0.4,
-        '#fbb4b9',
+        '#5a189a',
         0.5,
-        '#feebe2'
+        '#3c096c'
       ],
       'fill-outline-color': '#ccc',
       'fill-opacity': 0.8
@@ -195,16 +208,18 @@ map.on('style.load', function() {
         'interpolate',
         ['linear'],
         ['get', 'ruPct'],
+        0.0,
+        'white',
         0.1,
-        '#016c59',
+        '#c77dff',
         0.2,
-        '#1c9099',
+        '#9d4edd',
         0.3,
-        '#67a9cf',
+        '#7b2cbf',
         0.4,
-        '#bdc9e1',
+        '#5a189a',
         0.5,
-        '#f6eff7'
+        '#3c096c'
       ],
       'fill-outline-color': '#ccc',
       'fill-opacity': 0.8
@@ -223,16 +238,18 @@ map.on('style.load', function() {
         'interpolate',
         ['linear'],
         ['get', 'arPct'],
+        0.0,
+        'white',
         0.1,
-        '#993404',
+        '#c77dff',
         0.2,
-        '#d95f0e',
+        '#9d4edd',
         0.3,
-        '#fe9929',
+        '#7b2cbf',
         0.4,
-        '#fed98e',
+        '#5a189a',
         0.5,
-        '#ffffd4'
+        '#3c096c'
       ],
       'fill-outline-color': '#ccc',
       'fill-opacity': 0.8
@@ -250,16 +267,18 @@ map.on('style.load', function() {
         'interpolate',
         ['linear'],
         ['get', 'gerPct'],
+        0.0,
+        'white',
         0.1,
-        '#a50f15',
+        '#c77dff',
         0.2,
-        '#de2d26',
+        '#9d4edd',
         0.3,
-        '#fb6a4a',
+        '#7b2cbf',
         0.4,
-        '#fcae91',
+        '#5a189a',
         0.5,
-        '#fee5d9'
+        '#3c096c'
       ],
       'fill-outline-color': '#ccc',
       'fill-opacity': 0.8
@@ -693,9 +712,9 @@ $('#ru').on('click', function() {
   });
 
   //Inject language header into the infobox
-  $('#subjecthead').text('French-speaking LEPs');
+  $('#subjecthead').text('Russian-speaking LEPs');
   // Inject description into the sidebar
-  $('#infofill').text(kordescription);
+  $('#infofill').text(rudescription);
 
   // Pop up code for all LEPs. Have to nest inside this click function so that
   // the pop-up content will change as the user clicks through the different layers
@@ -773,7 +792,7 @@ $('#ar').on('click', function() {
   //Inject language header into the infobox
   $('#subjecthead').text('Arabic-Speaking LEPs');
   // Inject description into the sidebar
-  $('#infofill').text(kordescription);
+  $('#infofill').text(ardescription);
 
   // Pop up code for all LEPs. Have to nest inside this click function so that
   // the pop-up content will change as the user clicks through the different layers
@@ -851,7 +870,7 @@ $('#ger').on('click', function() {
   //Inject language header into the infobox
   $('#subjecthead').text('Yiddish-speaking LEPs');
   // Inject description into the sidebar
-  $('#infofill').text(kordescription);
+  $('#infofill').text(gerdescription);
 
   // Pop up code for all LEPs. Have to nest inside this click function so that
   // the pop-up content will change as the user clicks through the different layers
