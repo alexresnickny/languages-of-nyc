@@ -13,13 +13,7 @@ map.addControl(nav, 'top-left');
 
 // colorsets for legendbar
 var noEngcolors = ['white', '#ea698b', '#c05299', '#937aab', '#6d23b6', '#571089'];
-var spcolors = ['white', '#c77dff', '#9d4edd', '#7b2cbf', '#5a189a', '#3c096c'];
-var chcolors= ['white', '#c77dff', '#9d4edd', '#7b2cbf', '#5a189a', '#3c096c'];
-var korcolors = ['white', '#c77dff', '#9d4edd', '#7b2cbf', '#5a189a', '#3c096c'];
-var frcolors = ['white', '#c77dff', '#9d4edd', '#7b2cbf', '#5a189a', '#3c096c'];
-var rucolors = ['white', '#c77dff', '#9d4edd', '#7b2cbf', '#5a189a', '#3c096c'];
-var arcolors = ['white', '#c77dff', '#9d4edd', '#7b2cbf', '#5a189a', '#3c096c'];
-var gercolors = ['white', '#c77dff', '#9d4edd', '#7b2cbf', '#5a189a', '#3c096c'];
+var langcolors = ['white', '#c77dff', '#9d4edd', '#7b2cbf', '#5a189a', '#3c096c'];
 
 // desciptions of each linguistic group
 var noengdescription = [
@@ -32,7 +26,7 @@ var chdescription = [
   'This includes speakers of all dialects of Chinese (Mandarin and Cantonese, etc.).'
 ];
 var kordescription = [
-  'This includes those who speak Korean.'
+  'This includes New Yorkers who speak Korean.'
 ];
 var frdescription = [
   'This includes those who speak French and Haitian Creole. Many Haitian Creole speakers also speak some French.'
@@ -47,7 +41,7 @@ var gerdescription = [
   'This includes those who speak Yiddish, German or other German dialects like Pennsylvania Dutch. In New York, Yiddish strongly dominates this category..'
 ];
 
-map.on('style.load', function() {
+map.on('load', function() {
   // add a geojson source
   map.addSource('language-data', {
     type: 'geojson',
@@ -59,7 +53,10 @@ map.on('style.load', function() {
     'id': 'noEng-fill',
     'type': 'fill',
     'source': 'language-data',
-    'layout': {},
+    'layout': {
+        ///make layer visible by default
+        'visibility': 'visible',
+    },
     'paint': {
       "fill-color": ["interpolate",
         ["get", "noEngPct"],
@@ -75,10 +72,11 @@ map.on('style.load', function() {
         '#6d23b6',
         0.5,
         '#571089'
-      ]
+      ],
+      'fill-outline-color': '#ccc',
+      'fill-opacity': 0.8
     }
-  });
-
+  }, 'waterway-label');
 
   // add Spanish to map
   map.addLayer({
@@ -304,22 +302,6 @@ $('#noEng').on('click', function() {
   map.setLayoutProperty('ru-fill', 'visibility', 'none');
   map.setLayoutProperty('ar-fill', 'visibility', 'none');
   map.setLayoutProperty('ger-fill', 'visibility', 'none');
-  // Adjust Legend
-  $('#legendbar1').css({
-    'background-color': noEngcolors[4]
-  });
-  $('#legendbar2').css({
-    'background-color': noEngcolors[3]
-  });
-  $('#legendbar3').css({
-    'background-color': noEngcolors[2]
-  });
-  $('#legendbar4').css({
-    'background-color': noEngcolors[1]
-  });
-  $('#legendbar5').css({
-    'background-color': noEngcolors[0]
-  });
 
   //Inject language header into the infobox
   $('#subjecthead').text('All LEPs');
@@ -382,22 +364,6 @@ $('#sp').on('click', function() {
   map.setLayoutProperty('ru-fill', 'visibility', 'none');
   map.setLayoutProperty('ar-fill', 'visibility', 'none');
   map.setLayoutProperty('ger-fill', 'visibility', 'none');
-  // Adjust Legend
-  $('#legendbar1').css({
-    'background-color': spcolors[4]
-  });
-  $('#legendbar2').css({
-    'background-color': spcolors[3]
-  });
-  $('#legendbar3').css({
-    'background-color': spcolors[2]
-  });
-  $('#legendbar4').css({
-    'background-color': spcolors[1]
-  });
-  $('#legendbar5').css({
-    'background-color': spcolors[0]
-  });
 
   //Inject language header into the infobox
   $('#subjecthead').text('Spanish-speaking LEPs');
@@ -460,22 +426,6 @@ $('#ch').on('click', function() {
   map.setLayoutProperty('ru-fill', 'visibility', 'none');
   map.setLayoutProperty('ar-fill', 'visibility', 'none');
   map.setLayoutProperty('ger-fill', 'visibility', 'none');
-  // Adjust Legend
-  $('#legendbar1').css({
-    'background-color': chcolors[4]
-  });
-  $('#legendbar2').css({
-    'background-color': chcolors[3]
-  });
-  $('#legendbar3').css({
-    'background-color': chcolors[2]
-  });
-  $('#legendbar4').css({
-    'background-color': chcolors[1]
-  });
-  $('#legendbar5').css({
-    'background-color': chcolors[0]
-  });
 
   //Inject language header into the infobox
   $('#subjecthead').text('Chinese-speaking LEPs');
@@ -538,22 +488,6 @@ $('#kor').on('click', function() {
   map.setLayoutProperty('ru-fill', 'visibility', 'none');
   map.setLayoutProperty('ar-fill', 'visibility', 'none');
   map.setLayoutProperty('ger-fill', 'visibility', 'none');
-  // Adjust Legend
-  $('#legendbar1').css({
-    'background-color': korcolors[4]
-  });
-  $('#legendbar2').css({
-    'background-color': korcolors[3]
-  });
-  $('#legendbar3').css({
-    'background-color': korcolors[2]
-  });
-  $('#legendbar4').css({
-    'background-color': korcolors[1]
-  });
-  $('#legendbar5').css({
-    'background-color': korcolors[0]
-  });
 
   //Inject language header into the infobox
   $('#subjecthead').text('Korean-speaking LEPs');
@@ -616,22 +550,6 @@ $('#fr').on('click', function() {
   map.setLayoutProperty('ru-fill', 'visibility', 'none');
   map.setLayoutProperty('ar-fill', 'visibility', 'none');
   map.setLayoutProperty('ger-fill', 'visibility', 'none');
-  // Adjust Legend
-  $('#legendbar1').css({
-    'background-color': frcolors[4]
-  });
-  $('#legendbar2').css({
-    'background-color': frcolors[3]
-  });
-  $('#legendbar3').css({
-    'background-color': frcolors[2]
-  });
-  $('#legendbar4').css({
-    'background-color': frcolors[1]
-  });
-  $('#legendbar5').css({
-    'background-color': frcolors[0]
-  });
 
   //Inject language header into the infobox
   $('#subjecthead').text('French-speaking LEPs');
@@ -694,22 +612,6 @@ $('#ru').on('click', function() {
   map.setLayoutProperty('ru-fill', 'visibility', 'visible');
   map.setLayoutProperty('ar-fill', 'visibility', 'none');
   map.setLayoutProperty('ger-fill', 'visibility', 'none');
-  // Adjust Legend
-  $('#legendbar1').css({
-    'background-color': rucolors[4]
-  });
-  $('#legendbar2').css({
-    'background-color': rucolors[3]
-  });
-  $('#legendbar3').css({
-    'background-color': rucolors[2]
-  });
-  $('#legendbar4').css({
-    'background-color': rucolors[1]
-  });
-  $('#legendbar5').css({
-    'background-color': rucolors[0]
-  });
 
   //Inject language header into the infobox
   $('#subjecthead').text('Russian-speaking LEPs');
@@ -772,22 +674,6 @@ $('#ar').on('click', function() {
   map.setLayoutProperty('ru-fill', 'visibility', 'none');
   map.setLayoutProperty('ar-fill', 'visibility', 'visible');
   map.setLayoutProperty('ger-fill', 'visibility', 'none');
-  // Adjust Legend
-  $('#legendbar1').css({
-    'background-color': arcolors[4]
-  });
-  $('#legendbar2').css({
-    'background-color': arcolors[3]
-  });
-  $('#legendbar3').css({
-    'background-color': arcolors[2]
-  });
-  $('#legendbar4').css({
-    'background-color': arcolors[1]
-  });
-  $('#legendbar5').css({
-    'background-color': arcolors[0]
-  });
 
   //Inject language header into the infobox
   $('#subjecthead').text('Arabic-Speaking LEPs');
@@ -850,22 +736,6 @@ $('#ger').on('click', function() {
   map.setLayoutProperty('ru-fill', 'visibility', 'none');
   map.setLayoutProperty('ar-fill', 'visibility', 'none');
   map.setLayoutProperty('ger-fill', 'visibility', 'visible');
-  // Adjust Legend
-  $('#legendbar1').css({
-    'background-color': gercolors[4]
-  });
-  $('#legendbar2').css({
-    'background-color': gercolors[3]
-  });
-  $('#legendbar3').css({
-    'background-color': gercolors[2]
-  });
-  $('#legendbar4').css({
-    'background-color': gercolors[1]
-  });
-  $('#legendbar5').css({
-    'background-color': gercolors[0]
-  });
 
   //Inject language header into the infobox
   $('#subjecthead').text('Yiddish-speaking LEPs');
@@ -917,8 +787,6 @@ $('#ger').on('click', function() {
   });
 
 });
-
-
 
 
 

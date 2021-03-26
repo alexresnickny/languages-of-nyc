@@ -33,32 +33,28 @@ html, body, .container, #sidebar, #mapContainer {
 }
 
 #a {
-  background: #5EF688;
+  background: #ffffff;
   margin-bottom: 10px;
 }
 
 #b {
-  background: #5EF6D4;
+  background: #c77dff;
 }
 
 #c {
-  background: #5ECCF6;
+  background: #9d4edd;
 }
 
 #d {
-  background: #5E80F6;
+  background: #7b2cbf;
 }
 
 #e {
-  background: #885EF6;
+  background: #5a189a;
 }
 
 #f {
-  background: #D45EF6;
-}
-
-#g {
-  background: #7A3B94;
+  background: #3c096c;
 }
 
 .legend {
@@ -69,6 +65,12 @@ html, body, .container, #sidebar, #mapContainer {
 
 #legendbar, #modalButton {
   padding-top: 10px;
+}
+
+.row2:after {
+  content: "";
+  display: table;
+  clear: both;
 }
 
 /* The Modal (background) */
