@@ -30,6 +30,10 @@ html, body, .container, #sidebar, #mapContainer {
   border-radius: 5px;
 }
 
+#subjecthead {
+  font-size: 22px;
+}
+
 #mapContainer {
   flex-grow: 1;
 }

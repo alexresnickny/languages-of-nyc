@@ -403,7 +403,7 @@ map.on('load', function() {
     map.setLayoutProperty('ger-fill', 'visibility', 'none');
 
     //Inject language header into the infobox
-    $('#subjecthead').text('Spanish-speaking LEPs');
+    $('#subjecthead').text('Spanish-Speaking LEPs');
     // Inject description into the sidebar
     $('#infofill').text(spdescription);
 
@@ -421,7 +421,7 @@ map.on('load', function() {
     map.setLayoutProperty('ger-fill', 'visibility', 'none');
 
     //Inject language header into the infobox
-    $('#subjecthead').text('Chinese-speaking LEPs');
+    $('#subjecthead').text('Chinese-Speaking LEPs');
     // Inject description into the sidebar
     $('#infofill').text(chdescription);
 
@@ -457,7 +457,7 @@ map.on('load', function() {
     map.setLayoutProperty('ger-fill', 'visibility', 'none');
 
     //Inject language header into the infobox
-    $('#subjecthead').text('French-speaking LEPs');
+    $('#subjecthead').text('French-Speaking LEPs');
     // Inject description into the sidebar
     $('#infofill').text(frdescription);
 
@@ -475,7 +475,7 @@ map.on('load', function() {
     map.setLayoutProperty('ger-fill', 'visibility', 'none');
 
     //Inject language header into the infobox
-    $('#subjecthead').text('Russian-speaking LEPs');
+    $('#subjecthead').text('Russian-Speaking LEPs');
     // Inject description into the sidebar
     $('#infofill').text(rudescription);
 
@@ -511,7 +511,7 @@ map.on('load', function() {
     map.setLayoutProperty('ger-fill', 'visibility', 'visible');
 
     //Inject language header into the infobox
-    $('#subjecthead').text('Yiddish-speaking LEPs');
+    $('#subjecthead').text('Yiddish-Speaking LEPs');
     // Inject description into the sidebar
     $('#infofill').text(gerdescription);
 
