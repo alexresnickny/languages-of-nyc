@@ -1,7 +1,7 @@
 html, body, .container, #sidebar, #mapContainer {
   height: 100%;
   margin: 0;
-  font-family: arial;
+  font-family: verdana;
   text-align: center;
 }
 
@@ -12,10 +12,12 @@ html, body, .container, #sidebar, #mapContainer {
 #sidebar {
   background: lightgray;
   width: 320px;
+  font-family: verdana;
 }
 
 #description, #instructions, #data {
-  margin-top: 20px;
+  font-family: helvetica;
+  padding-top: 10px;
   margin-left: 5px;
   margin-right: 5px;
 }
@@ -29,7 +31,7 @@ html, body, .container, #sidebar, #mapContainer {
   border-radius: 50%;
   height: 20px;
   margin-right: 10px;
-  margin-left: 10px
+  margin-left: 20px
 }
 
 #a {

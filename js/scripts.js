@@ -11,10 +11,6 @@ var map = new mapboxgl.Map({
 var nav = new mapboxgl.NavigationControl();
 map.addControl(nav, 'top-left');
 
-// colorsets for legendbar
-var noEngcolors = ['white', '#ea698b', '#c05299', '#937aab', '#6d23b6', '#571089'];
-var langcolors = ['white', '#c77dff', '#9d4edd', '#7b2cbf', '#5a189a', '#3c096c'];
-
 // desciptions of each linguistic group
 var noengdescription = [
   'This includes all individuals 5 years and over with low English proficiency, no matter their native language.'
@@ -38,7 +34,7 @@ var ardescription = [
   'This includes speakers of all dialects of Arabic.'
 ];
 var gerdescription = [
-  'This includes those who speak Yiddish, German or other German dialects like Pennsylvania Dutch. In New York, Yiddish strongly dominates this category.'
+  'This includes those who speak Yiddish, German or other German dialects like Pennsylvania Dutch. In New York, this is mostly Yiddish speakers.'
 ];
 
 map.on('load', function() {
@@ -52,36 +48,6 @@ map.on('load', function() {
     type: 'geojson',
     data: 'data/borough-voting.geojson'
   });
-
-  // add a layer to style and display the Source
-  map.addLayer({
-    'id': 'noEng-fill',
-    'type': 'fill',
-    'source': 'language-data',
-    'layout': {
-        ///make layer visible by default
-        'visibility': 'visible',
-    },
-    'paint': {
-      "fill-color": ["interpolate",
-        ["get", "noEngPct"],
-        0.0,
-        'white',
-        0.1,
-        '#ea698b',
-        0.2,
-        '#c05299',
-        0.3,
-        '#937aab',
-        0.4,
-        '#6d23b6',
-        0.5,
-        '#571089'
-      ],
-      'fill-outline-color': '#ccc',
-      'fill-opacity': 0.8
-    }
-  }, 'waterway-label');
 
   // add Spanish to map
   map.addLayer({
@@ -288,6 +254,37 @@ map.on('load', function() {
     }
   }, 'waterway-label');
 
+  // add a layer to style and display the Source
+  map.addLayer({
+    'id': 'noEng-fill',
+    'type': 'fill',
+    'source': 'language-data',
+    'layout': {
+      ///make layer visible by default
+      'visibility': 'visible',
+    },
+    'paint': {
+      "fill-color": ['interpolate',
+        ['linear'],
+        ['get', 'noEngPct'],
+        0.0,
+        'white',
+        0.1,
+        '#c77dff',
+        0.2,
+        '#9d4edd',
+        0.3,
+        '#7b2cbf',
+        0.4,
+        '#5a189a',
+        0.5,
+        '#3c096c'
+      ],
+      'fill-outline-color': '#ccc',
+      'fill-opacity': 0.8
+    }
+  }, 'waterway-label');
+
   map.addLayer({
     'id': 'boroughs',
     'type': 'line',
@@ -320,50 +317,50 @@ map.on('load', function() {
   });
 
   // Create a popup, but don't add it to the map yet.
-    var popup = new mapboxgl.Popup({
-      closeButton: false,
-      closeOnClick: false
-    });
+  var popup = new mapboxgl.Popup({
+    closeButton: false,
+    closeOnClick: false
+  });
 
-// Add in all the button click actions, hiding all other layers except for the one that's clicked,
-// changing the popup popupContent
-// and changing the Legend Bar colors
-$('#noEng').on('click', function() {
+  // Add in all the button click actions, hiding all other layers except for the one that's clicked,
+  // changing the popup popupContent
+  // and changing the Legend Bar colors
+  $('#noEng').on('click', function() {
 
-  map.setLayoutProperty('noEng-fill', 'visibility', 'visible');
-  map.setLayoutProperty('sp-fill', 'visibility', 'none');
-  map.setLayoutProperty('ch-fill', 'visibility', 'none');
-  map.setLayoutProperty('kor-fill', 'visibility', 'none');
-  map.setLayoutProperty('fr-fill', 'visibility', 'none');
-  map.setLayoutProperty('ru-fill', 'visibility', 'none');
-  map.setLayoutProperty('ar-fill', 'visibility', 'none');
-  map.setLayoutProperty('ger-fill', 'visibility', 'none');
+    map.setLayoutProperty('noEng-fill', 'visibility', 'visible');
+    map.setLayoutProperty('sp-fill', 'visibility', 'none');
+    map.setLayoutProperty('ch-fill', 'visibility', 'none');
+    map.setLayoutProperty('kor-fill', 'visibility', 'none');
+    map.setLayoutProperty('fr-fill', 'visibility', 'none');
+    map.setLayoutProperty('ru-fill', 'visibility', 'none');
+    map.setLayoutProperty('ar-fill', 'visibility', 'none');
+    map.setLayoutProperty('ger-fill', 'visibility', 'none');
 
-  //Inject language header into the infobox
-  $('#subjecthead').text('All LEPs');
-  // Inject description into the sidebar
-  $('#infofill').text(noengdescription);
+    //Inject language header into the infobox
+    $('#subjecthead').text('All LEPs');
+    // Inject description into the sidebar
+    $('#infofill').text(noengdescription);
 
-  // Pop up code for all LEPs. Have to nest inside this click function so that
-  // the pop-up content will change as the user clicks through the different layers
-  map.on('mousemove', function(e) {
+    // Pop up code for all LEPs. Have to nest inside this click function so that
+    // the pop-up content will change as the user clicks through the different layers
+    map.on('mousemove', function(e) {
 
-    var features = map.queryRenderedFeatures(e.point, {
-      layers: ['noEng-fill'],
-    });
+      var features = map.queryRenderedFeatures(e.point, {
+        layers: ['noEng-fill'],
+      });
 
-    if (features.length > 0) {
-      // show the popup
-      // Populate the popup and set its coordinates
-      // based on the feature found.
+      if (features.length > 0) {
+        // show the popup
+        // Populate the popup and set its coordinates
+        // based on the feature found.
 
-      var hoveredFeature = features[0]
-      var censusTract = hoveredFeature.properties.geo
-      var totalPop = hoveredFeature.properties.Tot
-      var lepPop = hoveredFeature.properties.ENG_NOT
+        var hoveredFeature = features[0]
+        var censusTract = hoveredFeature.properties.geo
+        var totalPop = hoveredFeature.properties.Tot
+        var lepPop = hoveredFeature.properties.ENG_NOT
 
 
-      var popupContent = `
+        var popupContent = `
                                  <div>
                                        <h5>Total LEPs</h5> </br>
                                        <b>${geo}</b><br/>
@@ -372,147 +369,147 @@ $('#noEng').on('click', function() {
                                  </div>
                                                    `
 
-      popup.setLngLat(e.lngLat).setHTML(popupContent).addTo(map);
+        popup.setLngLat(e.lngLat).setHTML(popupContent).addTo(map);
 
-      // set this lot's polygon feature as the data for the highlight source
-      map.getSource('highlight-feature').setData(hoveredFeature.geometry);
+        // set this lot's polygon feature as the data for the highlight source
+        map.getSource('highlight-feature').setData(hoveredFeature.geometry);
 
-      // show the cursor as a pointer
-      map.getCanvas().style.cursor = 'pointer';
-    } else {
-      // remove the Popup
-      popup.remove();
+        // show the cursor as a pointer
+        map.getCanvas().style.cursor = 'pointer';
+      } else {
+        // remove the Popup
+        popup.remove();
 
-      map.getCanvas().style.cursor = '';
-    }
+        map.getCanvas().style.cursor = '';
+      }
+
+    });
 
   });
 
-});
+  $('#sp').on('click', function() {
 
-$('#sp').on('click', function() {
+    map.setLayoutProperty('noEng-fill', 'visibility', 'none');
+    map.setLayoutProperty('sp-fill', 'visibility', 'visible');
+    map.setLayoutProperty('ch-fill', 'visibility', 'none');
+    map.setLayoutProperty('kor-fill', 'visibility', 'none');
+    map.setLayoutProperty('fr-fill', 'visibility', 'none');
+    map.setLayoutProperty('ru-fill', 'visibility', 'none');
+    map.setLayoutProperty('ar-fill', 'visibility', 'none');
+    map.setLayoutProperty('ger-fill', 'visibility', 'none');
 
-  map.setLayoutProperty('noEng-fill', 'visibility', 'none');
-  map.setLayoutProperty('sp-fill', 'visibility', 'visible');
-  map.setLayoutProperty('ch-fill', 'visibility', 'none');
-  map.setLayoutProperty('kor-fill', 'visibility', 'none');
-  map.setLayoutProperty('fr-fill', 'visibility', 'none');
-  map.setLayoutProperty('ru-fill', 'visibility', 'none');
-  map.setLayoutProperty('ar-fill', 'visibility', 'none');
-  map.setLayoutProperty('ger-fill', 'visibility', 'none');
+    //Inject language header into the infobox
+    $('#subjecthead').text('Spanish-speaking LEPs');
+    // Inject description into the sidebar
+    $('#infofill').text(spdescription);
 
-  //Inject language header into the infobox
-  $('#subjecthead').text('Spanish-speaking LEPs');
-  // Inject description into the sidebar
-  $('#infofill').text(spdescription);
+  });
 
-});
+  $('#ch').on('click', function() {
 
-$('#ch').on('click', function() {
+    map.setLayoutProperty('noEng-fill', 'visibility', 'none');
+    map.setLayoutProperty('sp-fill', 'visibility', 'none');
+    map.setLayoutProperty('ch-fill', 'visibility', 'visible');
+    map.setLayoutProperty('kor-fill', 'visibility', 'none');
+    map.setLayoutProperty('fr-fill', 'visibility', 'none');
+    map.setLayoutProperty('ru-fill', 'visibility', 'none');
+    map.setLayoutProperty('ar-fill', 'visibility', 'none');
+    map.setLayoutProperty('ger-fill', 'visibility', 'none');
 
-  map.setLayoutProperty('noEng-fill', 'visibility', 'none');
-  map.setLayoutProperty('sp-fill', 'visibility', 'none');
-  map.setLayoutProperty('ch-fill', 'visibility', 'visible');
-  map.setLayoutProperty('kor-fill', 'visibility', 'none');
-  map.setLayoutProperty('fr-fill', 'visibility', 'none');
-  map.setLayoutProperty('ru-fill', 'visibility', 'none');
-  map.setLayoutProperty('ar-fill', 'visibility', 'none');
-  map.setLayoutProperty('ger-fill', 'visibility', 'none');
+    //Inject language header into the infobox
+    $('#subjecthead').text('Chinese-speaking LEPs');
+    // Inject description into the sidebar
+    $('#infofill').text(chdescription);
 
-  //Inject language header into the infobox
-  $('#subjecthead').text('Chinese-speaking LEPs');
-  // Inject description into the sidebar
-  $('#infofill').text(chdescription);
+  });
 
-});
+  $('#kor').on('click', function() {
 
-$('#kor').on('click', function() {
+    map.setLayoutProperty('noEng-fill', 'visibility', 'none');
+    map.setLayoutProperty('sp-fill', 'visibility', 'none');
+    map.setLayoutProperty('ch-fill', 'visibility', 'none');
+    map.setLayoutProperty('kor-fill', 'visibility', 'visible');
+    map.setLayoutProperty('fr-fill', 'visibility', 'none');
+    map.setLayoutProperty('ru-fill', 'visibility', 'none');
+    map.setLayoutProperty('ar-fill', 'visibility', 'none');
+    map.setLayoutProperty('ger-fill', 'visibility', 'none');
 
-  map.setLayoutProperty('noEng-fill', 'visibility', 'none');
-  map.setLayoutProperty('sp-fill', 'visibility', 'none');
-  map.setLayoutProperty('ch-fill', 'visibility', 'none');
-  map.setLayoutProperty('kor-fill', 'visibility', 'visible');
-  map.setLayoutProperty('fr-fill', 'visibility', 'none');
-  map.setLayoutProperty('ru-fill', 'visibility', 'none');
-  map.setLayoutProperty('ar-fill', 'visibility', 'none');
-  map.setLayoutProperty('ger-fill', 'visibility', 'none');
+    //Inject language header into the infobox
+    $('#subjecthead').text('Korean-speaking LEPs');
+    // Inject description into the sidebar
+    $('#infofill').text(kordescription);
 
-  //Inject language header into the infobox
-  $('#subjecthead').text('Korean-speaking LEPs');
-  // Inject description into the sidebar
-  $('#infofill').text(kordescription);
+  });
 
-});
+  $('#fr').on('click', function() {
 
-$('#fr').on('click', function() {
+    map.setLayoutProperty('noEng-fill', 'visibility', 'none');
+    map.setLayoutProperty('sp-fill', 'visibility', 'none');
+    map.setLayoutProperty('ch-fill', 'visibility', 'none');
+    map.setLayoutProperty('kor-fill', 'visibility', 'none');
+    map.setLayoutProperty('fr-fill', 'visibility', 'visible');
+    map.setLayoutProperty('ru-fill', 'visibility', 'none');
+    map.setLayoutProperty('ar-fill', 'visibility', 'none');
+    map.setLayoutProperty('ger-fill', 'visibility', 'none');
 
-  map.setLayoutProperty('noEng-fill', 'visibility', 'none');
-  map.setLayoutProperty('sp-fill', 'visibility', 'none');
-  map.setLayoutProperty('ch-fill', 'visibility', 'none');
-  map.setLayoutProperty('kor-fill', 'visibility', 'none');
-  map.setLayoutProperty('fr-fill', 'visibility', 'visible');
-  map.setLayoutProperty('ru-fill', 'visibility', 'none');
-  map.setLayoutProperty('ar-fill', 'visibility', 'none');
-  map.setLayoutProperty('ger-fill', 'visibility', 'none');
+    //Inject language header into the infobox
+    $('#subjecthead').text('French-speaking LEPs');
+    // Inject description into the sidebar
+    $('#infofill').text(frdescription);
 
-  //Inject language header into the infobox
-  $('#subjecthead').text('French-speaking LEPs');
-  // Inject description into the sidebar
-  $('#infofill').text(frdescription);
+  });
 
-});
+  $('#ru').on('click', function() {
 
-$('#ru').on('click', function() {
+    map.setLayoutProperty('noEng-fill', 'visibility', 'none');
+    map.setLayoutProperty('sp-fill', 'visibility', 'none');
+    map.setLayoutProperty('ch-fill', 'visibility', 'none');
+    map.setLayoutProperty('kor-fill', 'visibility', 'none');
+    map.setLayoutProperty('fr-fill', 'visibility', 'none');
+    map.setLayoutProperty('ru-fill', 'visibility', 'visible');
+    map.setLayoutProperty('ar-fill', 'visibility', 'none');
+    map.setLayoutProperty('ger-fill', 'visibility', 'none');
 
-  map.setLayoutProperty('noEng-fill', 'visibility', 'none');
-  map.setLayoutProperty('sp-fill', 'visibility', 'none');
-  map.setLayoutProperty('ch-fill', 'visibility', 'none');
-  map.setLayoutProperty('kor-fill', 'visibility', 'none');
-  map.setLayoutProperty('fr-fill', 'visibility', 'none');
-  map.setLayoutProperty('ru-fill', 'visibility', 'visible');
-  map.setLayoutProperty('ar-fill', 'visibility', 'none');
-  map.setLayoutProperty('ger-fill', 'visibility', 'none');
+    //Inject language header into the infobox
+    $('#subjecthead').text('Russian-speaking LEPs');
+    // Inject description into the sidebar
+    $('#infofill').text(rudescription);
 
-  //Inject language header into the infobox
-  $('#subjecthead').text('Russian-speaking LEPs');
-  // Inject description into the sidebar
-  $('#infofill').text(rudescription);
+  });
 
-});
+  $('#ar').on('click', function() {
 
-$('#ar').on('click', function() {
+    map.setLayoutProperty('noEng-fill', 'visibility', 'none');
+    map.setLayoutProperty('sp-fill', 'visibility', 'none');
+    map.setLayoutProperty('ch-fill', 'visibility', 'none');
+    map.setLayoutProperty('kor-fill', 'visibility', 'none');
+    map.setLayoutProperty('fr-fill', 'visibility', 'none');
+    map.setLayoutProperty('ru-fill', 'visibility', 'none');
+    map.setLayoutProperty('ar-fill', 'visibility', 'visible');
+    map.setLayoutProperty('ger-fill', 'visibility', 'none');
 
-  map.setLayoutProperty('noEng-fill', 'visibility', 'none');
-  map.setLayoutProperty('sp-fill', 'visibility', 'none');
-  map.setLayoutProperty('ch-fill', 'visibility', 'none');
-  map.setLayoutProperty('kor-fill', 'visibility', 'none');
-  map.setLayoutProperty('fr-fill', 'visibility', 'none');
-  map.setLayoutProperty('ru-fill', 'visibility', 'none');
-  map.setLayoutProperty('ar-fill', 'visibility', 'visible');
-  map.setLayoutProperty('ger-fill', 'visibility', 'none');
+    //Inject language header into the infobox
+    $('#subjecthead').text('Arabic-Speaking LEPs');
+    // Inject description into the sidebar
+    $('#infofill').text(ardescription);
 
-  //Inject language header into the infobox
-  $('#subjecthead').text('Arabic-Speaking LEPs');
-  // Inject description into the sidebar
-  $('#infofill').text(ardescription);
+  });
 
-});
+  $('#ger').on('click', function() {
 
-$('#ger').on('click', function() {
+    map.setLayoutProperty('noEng-fill', 'visibility', 'none');
+    map.setLayoutProperty('sp-fill', 'visibility', 'none');
+    map.setLayoutProperty('ch-fill', 'visibility', 'none');
+    map.setLayoutProperty('kor-fill', 'visibility', 'none');
+    map.setLayoutProperty('fr-fill', 'visibility', 'none');
+    map.setLayoutProperty('ru-fill', 'visibility', 'none');
+    map.setLayoutProperty('ar-fill', 'visibility', 'none');
+    map.setLayoutProperty('ger-fill', 'visibility', 'visible');
 
-  map.setLayoutProperty('noEng-fill', 'visibility', 'none');
-  map.setLayoutProperty('sp-fill', 'visibility', 'none');
-  map.setLayoutProperty('ch-fill', 'visibility', 'none');
-  map.setLayoutProperty('kor-fill', 'visibility', 'none');
-  map.setLayoutProperty('fr-fill', 'visibility', 'none');
-  map.setLayoutProperty('ru-fill', 'visibility', 'none');
-  map.setLayoutProperty('ar-fill', 'visibility', 'none');
-  map.setLayoutProperty('ger-fill', 'visibility', 'visible');
-
-  //Inject language header into the infobox
-  $('#subjecthead').text('Yiddish-speaking LEPs');
-  // Inject description into the sidebar
-  $('#infofill').text(gerdescription);
+    //Inject language header into the infobox
+    $('#subjecthead').text('Yiddish-speaking LEPs');
+    // Inject description into the sidebar
+    $('#infofill').text(gerdescription);
 
   });
 
