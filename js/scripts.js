@@ -35,10 +35,10 @@ var rudescription = [
   'This includes all speakers of Slavic Languages. Russian predominates in most of New York City, but there are also significant concentrations of Polish and Serbo-Croatian speakers in North Brooklyn and Queens.'
 ];
 var ardescription = [
-  'This includes those who speak any dialect of Arabic..'
+  'This includes speakers of all dialects of Arabic.'
 ];
 var gerdescription = [
-  'This includes those who speak Yiddish, German or other German dialects like Pennsylvania Dutch. In New York, Yiddish strongly dominates this category..'
+  'This includes those who speak Yiddish, German or other German dialects like Pennsylvania Dutch. In New York, Yiddish strongly dominates this category.'
 ];
 
 map.on('load', function() {
@@ -46,6 +46,11 @@ map.on('load', function() {
   map.addSource('language-data', {
     type: 'geojson',
     data: 'data/language-at-home1.geojson'
+  });
+
+  map.addSource('boroughLanguages', {
+    type: 'geojson',
+    data: 'data/borough-voting.geojson'
   });
 
   // add a layer to style and display the Source
@@ -283,6 +288,37 @@ map.on('load', function() {
     }
   }, 'waterway-label');
 
+  map.addLayer({
+    'id': 'boroughs',
+    'type': 'line',
+    'source': 'boroughLanguages',
+    'layout': {},
+    'paint': {
+      "line-color": "red",
+      "line-width": 3
+    }
+  });
+  // add an empty data source, which we will use to highlight the tract the user is hovering over
+  map.addSource('highlight-feature', {
+    type: 'geojson',
+    data: {
+      type: 'FeatureCollection',
+      features: []
+    }
+  })
+
+  // add a layer for the highlighted tract
+  map.addLayer({
+    id: 'highlight-line',
+    type: 'line',
+    source: 'highlight-feature',
+    paint: {
+      'line-width': 3,
+      'line-opacity': 0.9,
+      'line-color': 'green',
+    }
+  });
+
   // Create a popup, but don't add it to the map yet.
     var popup = new mapboxgl.Popup({
       closeButton: false,
@@ -370,50 +406,6 @@ $('#sp').on('click', function() {
   // Inject description into the sidebar
   $('#infofill').text(spdescription);
 
-  // Pop up code for all LEPs. Have to nest inside this click function so that
-  // the pop-up content will change as the user clicks through the different layers
-  map.on('mousemove', function(e) {
-
-    var features = map.queryRenderedFeatures(e.point, {
-      layers: ['sp-fill'],
-    });
-
-    if (features.length > 0) {
-      // show the popup
-      // Populate the popup and set its coordinates
-      // based on the feature found.
-
-      var hoveredFeature = features[0]
-      var censusTract = hoveredFeature.properties.geo
-      var totalPop = hoveredFeature.properties.Tot
-      var spPop = hoveredFeature.properties.SP_NOT
-
-
-      var popupContent = `
-                                 <div>
-                                       <h5>Spanish-Speaking LEPs</h5> </br>
-                                       <b>${geo}</b><br/>
-                                       <b>Total Population</b>: ${Tot} ppb <br/>
-                                       <b>LEPs</b>: ${SP_NOT}<br/>
-                                 </div>
-                                                   `
-
-      popup.setLngLat(e.lngLat).setHTML(popupContent).addTo(map);
-
-      // set this lot's polygon feature as the data for the highlight source
-      map.getSource('highlight-feature').setData(hoveredFeature.geometry);
-
-      // show the cursor as a pointer
-      map.getCanvas().style.cursor = 'pointer';
-    } else {
-      // remove the Popup
-      popup.remove();
-
-      map.getCanvas().style.cursor = '';
-    }
-
-  });
-
 });
 
 $('#ch').on('click', function() {
@@ -431,50 +423,6 @@ $('#ch').on('click', function() {
   $('#subjecthead').text('Chinese-speaking LEPs');
   // Inject description into the sidebar
   $('#infofill').text(chdescription);
-
-  // Pop up code for all LEPs. Have to nest inside this click function so that
-  // the pop-up content will change as the user clicks through the different layers
-  map.on('mousemove', function(e) {
-
-    var features = map.queryRenderedFeatures(e.point, {
-      layers: ['ch-fill'],
-    });
-
-    if (features.length > 0) {
-      // show the popup
-      // Populate the popup and set its coordinates
-      // based on the feature found.
-
-      var hoveredFeature = features[0]
-      var censusTract = hoveredFeature.properties.geo
-      var totalPop = hoveredFeature.properties.Tot
-      var chPop = hoveredFeature.properties.CH_NOT
-
-
-      var popupContent = `
-                                 <div>
-                                       <h5>Chinese-Speaking LEPs</h5> </br>
-                                       <b>${geo}</b><br/>
-                                       <b>Total Population</b>: ${Tot}<br/>
-                                       <b>LEPs</b>: ${CH_NOT}<br/>
-                                 </div>
-                                                   `
-
-      popup.setLngLat(e.lngLat).setHTML(popupContent).addTo(map);
-
-      // set this lot's polygon feature as the data for the highlight source
-      map.getSource('highlight-feature').setData(hoveredFeature.geometry);
-
-      // show the cursor as a pointer
-      map.getCanvas().style.cursor = 'pointer';
-    } else {
-      // remove the Popup
-      popup.remove();
-
-      map.getCanvas().style.cursor = '';
-    }
-
-  });
 
 });
 
@@ -494,50 +442,6 @@ $('#kor').on('click', function() {
   // Inject description into the sidebar
   $('#infofill').text(kordescription);
 
-  // Pop up code for all LEPs. Have to nest inside this click function so that
-  // the pop-up content will change as the user clicks through the different layers
-  map.on('mousemove', function(e) {
-
-    var features = map.queryRenderedFeatures(e.point, {
-      layers: ['kor-fill'],
-    });
-
-    if (features.length > 0) {
-      // show the popup
-      // Populate the popup and set its coordinates
-      // based on the feature found.
-
-      var hoveredFeature = features[0]
-      var censusTract = hoveredFeature.properties.geo
-      var totalPop = hoveredFeature.properties.Tot
-      var lepPop = hoveredFeature.properties.KOR_NOT
-
-
-      var popupContent = `
-                                 <div>
-                                       <h5>Korean-Speaking LEPs</h5> </br>
-                                       <b>${geo}</b><br/>
-                                       <b>Total Population</b>: ${Tot}<br/>
-                                       <b>LEPs</b>: ${KR_NOT}<br/>
-                                 </div>
-                                                   `
-
-      popup.setLngLat(e.lngLat).setHTML(popupContent).addTo(map);
-
-      // set this lot's polygon feature as the data for the highlight source
-      map.getSource('highlight-feature').setData(hoveredFeature.geometry);
-
-      // show the cursor as a pointer
-      map.getCanvas().style.cursor = 'pointer';
-    } else {
-      // remove the Popup
-      popup.remove();
-
-      map.getCanvas().style.cursor = '';
-    }
-
-  });
-
 });
 
 $('#fr').on('click', function() {
@@ -554,51 +458,7 @@ $('#fr').on('click', function() {
   //Inject language header into the infobox
   $('#subjecthead').text('French-speaking LEPs');
   // Inject description into the sidebar
-  $('#infofill').text(kordescription);
-
-  // Pop up code for all LEPs. Have to nest inside this click function so that
-  // the pop-up content will change as the user clicks through the different layers
-  map.on('mousemove', function(e) {
-
-    var features = map.queryRenderedFeatures(e.point, {
-      layers: ['fr-fill'],
-    });
-
-    if (features.length > 0) {
-      // show the popup
-      // Populate the popup and set its coordinates
-      // based on the feature found.
-
-      var hoveredFeature = features[0]
-      var censusTract = hoveredFeature.properties.geo
-      var totalPop = hoveredFeature.properties.Tot
-      var frenPop = hoveredFeature.properties.FR_HA_NOT
-
-
-      var popupContent = `
-                                 <div>
-                                       <h5>French-Speaking LEPs</h5> </br>
-                                       <b>${geo}</b><br/>
-                                       <b>Total Population</b>: ${Tot}<br/>
-                                       <b>LEPs</b>: ${FR_HA_NOT}<br/>
-                                 </div>
-                                                   `
-
-      popup.setLngLat(e.lngLat).setHTML(popupContent).addTo(map);
-
-      // set this lot's polygon feature as the data for the highlight source
-      map.getSource('highlight-feature').setData(hoveredFeature.geometry);
-
-      // show the cursor as a pointer
-      map.getCanvas().style.cursor = 'pointer';
-    } else {
-      // remove the Popup
-      popup.remove();
-
-      map.getCanvas().style.cursor = '';
-    }
-
-  });
+  $('#infofill').text(frdescription);
 
 });
 
@@ -618,50 +478,6 @@ $('#ru').on('click', function() {
   // Inject description into the sidebar
   $('#infofill').text(rudescription);
 
-  // Pop up code for all LEPs. Have to nest inside this click function so that
-  // the pop-up content will change as the user clicks through the different layers
-  map.on('mousemove', function(e) {
-
-    var features = map.queryRenderedFeatures(e.point, {
-      layers: ['ru-fill'],
-    });
-
-    if (features.length > 0) {
-      // show the popup
-      // Populate the popup and set its coordinates
-      // based on the feature found.
-
-      var hoveredFeature = features[0]
-      var censusTract = hoveredFeature.properties.geo
-      var totalPop = hoveredFeature.properties.Tot
-      var frenPop = hoveredFeature.properties.RU_PO_SL_N
-
-
-      var popupContent = `
-                                 <div>
-                                       <h5>Slavic-Speaking LEPs</h5> </br>
-                                       <b>${geo}</b><br/>
-                                       <b>Total Population</b>: ${Tot}<br/>
-                                       <b>LEPs</b>: ${RU_PO_SL_N}<br/>
-                                 </div>
-                                                   `
-
-      popup.setLngLat(e.lngLat).setHTML(popupContent).addTo(map);
-
-      // set this lot's polygon feature as the data for the highlight source
-      map.getSource('highlight-feature').setData(hoveredFeature.geometry);
-
-      // show the cursor as a pointer
-      map.getCanvas().style.cursor = 'pointer';
-    } else {
-      // remove the Popup
-      popup.remove();
-
-      map.getCanvas().style.cursor = '';
-    }
-
-  });
-
 });
 
 $('#ar').on('click', function() {
@@ -679,50 +495,6 @@ $('#ar').on('click', function() {
   $('#subjecthead').text('Arabic-Speaking LEPs');
   // Inject description into the sidebar
   $('#infofill').text(ardescription);
-
-  // Pop up code for all LEPs. Have to nest inside this click function so that
-  // the pop-up content will change as the user clicks through the different layers
-  map.on('mousemove', function(e) {
-
-    var features = map.queryRenderedFeatures(e.point, {
-      layers: ['ar-fill'],
-    });
-
-    if (features.length > 0) {
-      // show the popup
-      // Populate the popup and set its coordinates
-      // based on the feature found.
-
-      var hoveredFeature = features[0]
-      var censusTract = hoveredFeature.properties.geo
-      var totalPop = hoveredFeature.properties.Tot
-      var frenPop = hoveredFeature.properties.AB_NOT
-
-
-      var popupContent = `
-                                 <div>
-                                       <h5>Arabic-Speaking LEPs</h5> </br>
-                                       <b>${geo}</b><br/>
-                                       <b>Total Population</b>: ${Tot}<br/>
-                                       <b>LEPs</b>: ${AB_NOT}<br/>
-                                 </div>
-                                                   `
-
-      popup.setLngLat(e.lngLat).setHTML(popupContent).addTo(map);
-
-      // set this lot's polygon feature as the data for the highlight source
-      map.getSource('highlight-feature').setData(hoveredFeature.geometry);
-
-      // show the cursor as a pointer
-      map.getCanvas().style.cursor = 'pointer';
-    } else {
-      // remove the Popup
-      popup.remove();
-
-      map.getCanvas().style.cursor = '';
-    }
-
-  });
 
 });
 
@@ -742,61 +514,15 @@ $('#ger').on('click', function() {
   // Inject description into the sidebar
   $('#infofill').text(gerdescription);
 
-  // Pop up code for all LEPs. Have to nest inside this click function so that
-  // the pop-up content will change as the user clicks through the different layers
-  map.on('mousemove', function(e) {
-
-    var features = map.queryRenderedFeatures(e.point, {
-      layers: ['ger-fill'],
-    });
-
-    if (features.length > 0) {
-      // show the popup
-      // Populate the popup and set its coordinates
-      // based on the feature found.
-
-      var hoveredFeature = features[0]
-      var censusTract = hoveredFeature.properties.geo
-      var totalPop = hoveredFeature.properties.Tot
-      var frenPop = hoveredFeature.properties.GER_NOT
-
-
-      var popupContent = `
-                                 <div>
-                                       <h5>Yiddish-speaking LEPs</h5> </br>
-                                       <b>${geo}</b><br/>
-                                       <b>Total Population</b>: ${Tot}<br/>
-                                       <b>LEPs</b>: ${GER_NOT}<br/>
-                                 </div>
-                                                   `
-
-      popup.setLngLat(e.lngLat).setHTML(popupContent).addTo(map);
-
-      // set this lot's polygon feature as the data for the highlight source
-      map.getSource('highlight-feature').setData(hoveredFeature.geometry);
-
-      // show the cursor as a pointer
-      map.getCanvas().style.cursor = 'pointer';
-    } else {
-      // remove the Popup
-      popup.remove();
-
-      map.getCanvas().style.cursor = '';
-    }
-
   });
 
-});
-
-
-
   // Change the cursor to a pointer when the mouse is over the states layer.
-  map.on('mouseenter', 'nyc-nonenglish-fill', function() {
+  map.on('mouseenter', 'boroughs', function() {
     map.getCanvas().style.cursor = 'pointer';
   })
 
   // Change it back to a pointer when it leaves.
-  map.on('mouseleave', 'nyc-nonenglish-fill', function() {
+  map.on('mouseleave', 'boroughs', function() {
     map.getCanvas().style.cursor = '';
   })
 })
